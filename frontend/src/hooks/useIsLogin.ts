@@ -15,6 +15,7 @@ export const useIsLogin = () => {
             .then((response) => {
                 if (response.data.userId) setIsLogin(true);
             })
+            // @ts-ignore
             .catch((err) => {
                 setIsLogin(false);
             })
