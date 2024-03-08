@@ -2,7 +2,6 @@
 temp.js
 keys.js
 .env
-config.*
 package-lock.json
 dist
 *.pem
