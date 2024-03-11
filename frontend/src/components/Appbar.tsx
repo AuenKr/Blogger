@@ -4,7 +4,6 @@ import { Button } from "./Button";
 import { useSetRecoilState } from "recoil";
 import { progressBarAtom } from "../state/atom/progressBar";
 import { useUserDetail } from "../hooks/useUserDetail";
-import { login } from "../state/login";
 
 export const Appbar = () => {
     const navigate = useNavigate();
