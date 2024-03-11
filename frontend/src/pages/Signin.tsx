@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useIsLogin } from "../hooks/useIsLogin";
 import { useNavigate } from "react-router-dom";
 
-export const Signin = () => {
+export default function Signin() {
     const setProgress = useSetRecoilState(progressBarAtom);
     const isLogin = useIsLogin();
     const navigate = useNavigate();

@@ -7,10 +7,12 @@ import { Input } from "./Input";
 import { useSetRecoilState } from "recoil";
 import { progressBarAtom } from "../state/atom/progressBar";
 import { Button } from "./Button";
+import { login } from "../state/login";
 
 export const Auth = ({ type }: AuthInputType) => {
     const [postInputs, setPostInputs] = useState({});
     const setProgress = useSetRecoilState(progressBarAtom);
+    const isLoginState = useSetRecoilState(login);
     const navigate = useNavigate();
 
     const onChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -37,6 +39,7 @@ export const Auth = ({ type }: AuthInputType) => {
             .then((response) => {
                 const data: AuthOutputType = response.data;
                 localStorage.setItem("authorization", data.authorization);
+                isLoginState(true);
                 navigate("/blogs");
             });
     };

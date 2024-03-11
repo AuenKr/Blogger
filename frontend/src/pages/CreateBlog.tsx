@@ -10,7 +10,7 @@ import { progressBarAtom } from "../state/atom/progressBar";
 import { useNavigate } from "react-router-dom";
 import { useIsLogin } from "../hooks/useIsLogin";
 
-export const CreateBlog = () => {
+export default function CreateBlog() {
     const setProgress = useSetRecoilState(progressBarAtom);
     const isLogin = useIsLogin();
     const navigate = useNavigate();

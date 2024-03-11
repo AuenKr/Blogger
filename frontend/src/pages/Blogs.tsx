@@ -9,7 +9,7 @@ import { SkeletonBlogs } from "../components/skeletons/skeletonBlogs";
 import { useNavigate } from "react-router-dom";
 import { useIsLogin } from "../hooks/useIsLogin";
 
-export const Blogs = () => {
+export default function Blogs() {
     const setProgress = useSetRecoilState(progressBarAtom);
     const isLogin = useIsLogin();
     const navigate = useNavigate();
@@ -17,7 +17,7 @@ export const Blogs = () => {
     useEffect(() => {
         if (!isLogin) navigate("/signin");
         setProgress(100);
-    }, []);
+    }, [isLogin]);
     return (
         <>
             <ProgressBar />
@@ -25,26 +25,28 @@ export const Blogs = () => {
                 <Appbar />
                 <div className="space-y-5 mt-4 grid grid-cols-1">
                     {!loading ? (
-                        blogs.map((blog) => {
-                            return (
-                                <div
-                                    key={blog.id}
-                                    className="flex justify-center"
-                                >
-                                    <BlogCard
-                                        blogId={blog.id}
-                                        author={blog.author.name}
-                                        title={blog.title}
-                                        content={blog.content}
-                                        publishedAt={new Date()}
-                                    />
-                                </div>
-                            );
-                        })
+                        blogs
+                            .map((blog) => {
+                                return (
+                                    <div
+                                        key={blog.id}
+                                        className="flex justify-center"
+                                    >
+                                        <BlogCard
+                                            blogId={blog.id}
+                                            author={blog.author.name}
+                                            title={blog.title}
+                                            content={blog.content}
+                                            publishedAt={new Date()}
+                                        />
+                                    </div>
+                                );
+                            })
+                            .reverse()
                     ) : (
                         <div className="flex flex-col items-center justify-center">
                             {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((idx) => (
-                                <SkeletonBlogs key={idx}/>
+                                <SkeletonBlogs key={idx} />
                             ))}
                         </div>
                     )}
@@ -52,4 +54,4 @@ export const Blogs = () => {
             </div>
         </>
     );
-};
+}

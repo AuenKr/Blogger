@@ -14,7 +14,9 @@ export const BlogContent = ({
                 Posted on
                 {` ${publishAt.getDate()} / ${publishAt.getMonth()} / ${publishAt.getFullYear()} `}
             </div>
-            <div className="truncate text-justify text-lg">{content}</div>
+            <div className="truncate text-justify text-lg">
+                <div dangerouslySetInnerHTML={{ __html: content }}></div>;
+            </div>
         </div>
     );
 };

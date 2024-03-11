@@ -1,4 +1,4 @@
-import { useRecoilState } from "recoil"
+import { useRecoilState, useRecoilValue } from "recoil"
 import { login } from "../state/login";
 import { useEffect } from "react";
 import axios from "axios";
@@ -19,6 +19,6 @@ export const useIsLogin = () => {
             .catch((err) => {
                 setIsLogin(false);
             })
-    }, [login])
+    }, [])
     return islogin;
 }

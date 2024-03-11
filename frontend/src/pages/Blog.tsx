@@ -10,7 +10,7 @@ import { BlogContent } from "../components/BlogContent";
 import { SkeletonBlog } from "../components/skeletons/skeletonBlog";
 import { useIsLogin } from "../hooks/useIsLogin";
 
-export const Blog = () => {
+export default function Blog() {
     const setProgress = useSetRecoilState(progressBarAtom);
     const isLogin = useIsLogin();
     const navigate = useNavigate();

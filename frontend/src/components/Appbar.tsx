@@ -4,6 +4,7 @@ import { Button } from "./Button";
 import { useSetRecoilState } from "recoil";
 import { progressBarAtom } from "../state/atom/progressBar";
 import { useUserDetail } from "../hooks/useUserDetail";
+import { login } from "../state/login";
 
 export const Appbar = () => {
     const navigate = useNavigate();
@@ -18,11 +19,11 @@ export const Appbar = () => {
 
             <div className="flex items-center space-x-4">
                 <div className="flex space-x-3 text-sm font-bold">
-                    <Button 
+                    <Button
                         label="NewBlog"
-                        onClick={()=>{
+                        onClick={() => {
                             setProgress(70);
-                            navigate('/create')
+                            navigate("/create");
                         }}
                     />
                     <Button
@@ -30,7 +31,7 @@ export const Appbar = () => {
                         onClick={() => {
                             setProgress(80);
                             localStorage.clear();
-                            navigate("/signin")
+                            navigate("/signin");
                         }}
                     />
                 </div>
