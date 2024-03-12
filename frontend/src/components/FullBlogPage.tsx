@@ -19,7 +19,7 @@ export const FullBlogPage = ({ blogID }: { blogID: string }) => {
                     <BlogContent
                         title={blog.title}
                         content={blog.content}
-                        // publishAt={new Date()}
+                        publishAt={blog.createdAt}
                     />
                 </div>
             </div>

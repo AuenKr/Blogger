@@ -31,8 +31,8 @@ export const BlogCard = ({
                 <div className="text-lg font-semibold lg:font-bold lg:text-2xl">
                     {title}
                 </div>
-                <div className="lg:text-base line-clamp-1 lg:line-clamp-2">
-                    {<div dangerouslySetInnerHTML={{ __html: content }} />}
+                <div className="lg:text-base line-clamp-1 lg:line-clamp-2 p-1">
+                    <div dangerouslySetInnerHTML={{ __html: content }}></div>
                 </div>
             </div>
         </div>

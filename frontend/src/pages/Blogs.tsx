@@ -6,18 +6,15 @@ import { Appbar } from "../components/Appbar";
 import { useEffect } from "react";
 import { useBlogs } from "../hooks/useBlogs";
 import { SkeletonBlogs } from "../components/skeletons/skeletonBlogs";
-import { useNavigate } from "react-router-dom";
-import { useIsLogin } from "../hooks/useIsLogin";
+import { userLogin } from "../hooks/userLogin";
 
 export default function Blogs() {
+    userLogin("#", "/signin");
     const setProgress = useSetRecoilState(progressBarAtom);
-    const isLogin = useIsLogin();
-    const navigate = useNavigate();
     const { blogs, loading } = useBlogs();
     useEffect(() => {
-        if (!isLogin) navigate("/signin");
         setProgress(100);
-    }, [isLogin]);
+    }, []);
     return (
         <>
             <ProgressBar />
@@ -37,7 +34,7 @@ export default function Blogs() {
                                             author={blog.author.name}
                                             title={blog.title}
                                             content={blog.content}
-                                            publishedAt={new Date()}
+                                            // publishedAt={blog.createdAt}
                                         />
                                     </div>
                                 );

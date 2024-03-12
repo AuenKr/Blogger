@@ -4,15 +4,12 @@ import { Quote } from "../components/Quote";
 import { progressBarAtom } from "../state/atom/progressBar";
 import { ProgressBar } from "../components/ProgressBar";
 import { useEffect } from "react";
-import { useIsLogin } from "../hooks/useIsLogin";
-import { useNavigate } from "react-router-dom";
+import { userLogin } from "../hooks/userLogin";
 
 export default function Signin() {
+    userLogin("/blogs", "#");
     const setProgress = useSetRecoilState(progressBarAtom);
-    const isLogin = useIsLogin();
-    const navigate = useNavigate();
     useEffect(() => {
-        if (isLogin) navigate("/blogs");
         setProgress(100);
     }, []);
     return (
@@ -28,4 +25,4 @@ export default function Signin() {
             </div>
         </>
     );
-};
+}

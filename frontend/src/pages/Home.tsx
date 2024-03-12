@@ -4,15 +4,14 @@ import { ProgressBar } from "../components/ProgressBar";
 import { Appbar } from "../components/Appbar";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useIsLogin } from "../hooks/useIsLogin";
+import { userLogin } from "../hooks/userLogin";
 
 export default function Home() {
+    userLogin('/blogs', "#")
     const setProgress = useSetRecoilState(progressBarAtom);
-    const isLogin = useIsLogin();
     const navigate = useNavigate();
     useEffect(() => {
-        if (isLogin) navigate("/blogs");
-        else navigate("/signin");
+        navigate('/signin')
         setProgress(100);
     }, []);
     return (

@@ -1,18 +1,16 @@
 import { ChangeEvent, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { AuthHeader } from "./AuthHeader";
 import { Input } from "./Input";
 import { useSetRecoilState } from "recoil";
 import { progressBarAtom } from "../state/atom/progressBar";
 import { Button } from "./Button";
-import { login } from "../state/login";
 
 export const Auth = ({ type }: AuthInputType) => {
     const [postInputs, setPostInputs] = useState({});
     const setProgress = useSetRecoilState(progressBarAtom);
-    const isLoginState = useSetRecoilState(login);
     const navigate = useNavigate();
 
     const onChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -39,9 +37,13 @@ export const Auth = ({ type }: AuthInputType) => {
             .then((response) => {
                 const data: AuthOutputType = response.data;
                 localStorage.setItem("authorization", data.authorization);
-                isLoginState(true);
                 navigate("/blogs");
-            });
+            })
+            .catch(()=>{
+                alert(`${type==="signup"? "Fail to signup" : "Invalid Credentials"}`)
+                setProgress(100);
+            })
+
     };
     return (
         <div className="h-screen flex flex-col justify-center items-center">
