@@ -8,7 +8,6 @@ import { progressBarAtom } from "../state/atom/progressBar";
 export const userLogin = (successRedirect: string, failRedirect: string) => {
     const navigate = useNavigate();
     const setProgress = useSetRecoilState(progressBarAtom);
-
     if (!localStorage.getItem("authorization") && failRedirect !== "#") navigate("/signin");
     useEffect(() => {
         setProgress(70);
@@ -17,6 +16,9 @@ export const userLogin = (successRedirect: string, failRedirect: string) => {
                 Authorization: localStorage.getItem("authorization"),
             }
         })
+            .then(() => {
+                if (successRedirect !== "#") navigate(successRedirect);
+            })
             // @ts-ignore
             .catch((err) => {
                 if (failRedirect !== "#") navigate(failRedirect);
