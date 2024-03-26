@@ -4,7 +4,7 @@ import React, { useMemo, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { editorContentAtom } from "../../state/atom/editorContent";
 
-export const TextEditor = ({ placeholder }) => {
+export const TextEditor = ({ placeholder = " " }) => {
     const editor = useRef(null);
     const [content, setContent] = useRecoilState(editorContentAtom);
     const config = useMemo(

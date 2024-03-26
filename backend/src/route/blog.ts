@@ -206,5 +206,29 @@ blog.get('/:id', async (c) => {
         }, httpStatusCode.InternalServerErr)
     }
 })
+blog.get('/user/:id', async (c) => {
+    try {
+        const authorId = c.req.param('id')
 
+        const prisma = new PrismaClient({
+            datasourceUrl: c.env.DATABASE_URL,
+        }).$extends(withAccelerate())
+
+        const result = await prisma.post.findMany({
+            where: {
+                authorId: authorId
+            },
+        })
+
+        return c.json({
+            msg: 'List all blogs by ' + authorId,
+            blogs: result || "No blogs"
+        })
+    } catch (err) {
+        return c.json({
+            msg: "Internal server error fdsaf",
+            err
+        }, httpStatusCode.InternalServerErr)
+    }
+})
 export default blog;

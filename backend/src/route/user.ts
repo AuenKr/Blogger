@@ -14,19 +14,20 @@ const user = new Hono<{
 
 // POST /api/v1/user/signup
 // POST /api/v1/user/signin
-user.get('/', async (c)=>{
+user.get('/', async (c) => {
     try {
         const prisma = new PrismaClient({
             datasourceUrl: c.env.DATABASE_URL
         }).$extends(withAccelerate());
+
         return c.json({
-            msg : "On test route",
-        })    
+            msg: "On test route",
+        })
     } catch (error) {
         return c.json({
-            msg : "Internal server err",
+            msg: "Internal server err",
             error
-        })
+        }, 500)
     }
 })
 

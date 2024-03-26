@@ -4,16 +4,17 @@ import { ProgressBar } from "../components/ProgressBar";
 import { BlogCard } from "../components/BlogCard";
 import { Appbar } from "../components/Appbar";
 import { useEffect } from "react";
-import { useBlogs } from "../hooks/useBlogs";
 import { SkeletonBlogs } from "../components/skeletons/skeletonBlogs";
 import { userLogin } from "../hooks/userLogin";
+import { useUserBlogs } from "../hooks/useUserBlogs";
 
-export default function Blogs() {
+export default function UserBlogs() {
     userLogin("#", "/signin");
     const setProgress = useSetRecoilState(progressBarAtom);
-    const { blogs, loading } = useBlogs();
+    const { blogs, loading } = useUserBlogs();
     useEffect(() => {
         setProgress(100);
+        console.log('On UserBlogs: ', blogs)
     }, []);
     return (
         <>
@@ -31,7 +32,6 @@ export default function Blogs() {
                                     >
                                         <BlogCard
                                             blogId={blog.id}
-                                            author={blog.author.name}
                                             title={blog.title}
                                             content={blog.content}
                                             publishedAt={blog.createdAt}

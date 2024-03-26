@@ -10,6 +10,7 @@ import { Button } from "./Button";
 
 export const Auth = ({ type }: AuthInputType) => {
     const [postInputs, setPostInputs] = useState({});
+    const [loading, setLoading] = useState(false);
     const setProgress = useSetRecoilState(progressBarAtom);
     const navigate = useNavigate();
 
@@ -20,6 +21,7 @@ export const Auth = ({ type }: AuthInputType) => {
         }));
     };
     const onSubmit = async (evt: ChangeEvent<HTMLFormElement>) => {
+        setLoading(true);
         evt.preventDefault();
         setProgress(60);
         axios
@@ -37,13 +39,20 @@ export const Auth = ({ type }: AuthInputType) => {
             .then((response) => {
                 const data: AuthOutputType = response.data;
                 localStorage.setItem("authorization", data.authorization);
+                setLoading(false);
                 navigate("/blogs");
             })
-            .catch(()=>{
-                alert(`${type==="signup"? "Fail to signup" : "Invalid Credentials"}`)
+            .catch(() => {
+                setLoading(false);
+                alert(
+                    `${
+                        type === "signup"
+                            ? "Fail to signup"
+                            : "Invalid Credentials"
+                    }`
+                );
                 setProgress(100);
-            })
-
+            });
     };
     return (
         <div className="h-screen flex flex-col justify-center items-center">
@@ -76,6 +85,7 @@ export const Auth = ({ type }: AuthInputType) => {
                         label={type === "signup" ? "SignUp" : "SignIn"}
                         // @ts-ignore
                         onClick={onSubmit}
+                        loading={loading}
                     />
                 </div>
             </form>

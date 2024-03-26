@@ -1,33 +1,42 @@
-import { TextEditor } from "../components/Editor/TextEditor";
-import { Appbar } from "../components/Appbar";
-import { Button } from "../components/Button";
 import { useRecoilState, useSetRecoilState } from "recoil";
+import { userLogin } from "../hooks/userLogin";
+import { progressBarAtom } from "../state/atom/progressBar";
 import { editorContentAtom } from "../state/atom/editorContent";
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Appbar } from "../components/Appbar";
+import { TextEditor } from "../components/Editor/TextEditor";
+import { Button } from "../components/Button";
+import { useBlog } from "../hooks/useBlog";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
-import { progressBarAtom } from "../state/atom/progressBar";
-import { useNavigate } from "react-router-dom";
-import { userLogin } from "../hooks/userLogin";
 
-export default function CreateBlog() {
+export default function EditBlog() {
     userLogin("#", "/signin");
     const setProgress = useSetRecoilState(progressBarAtom);
+    const [editorContent, setEditorContent] = useRecoilState(editorContentAtom);
     const navigate = useNavigate();
-    const [content, setContent] = useRecoilState(editorContentAtom);
-    const [title, setTitle] = useState("");
+    const { id } = useParams();
+    const { blog } = useBlog(id as string);
+    const [title, setTitle] = useState(blog.title || "");
+    
     useEffect(() => {
         setProgress(100);
-    }, []);
+        setEditorContent(blog.content);
+        setTitle(blog.title);
+    }, [blog]);
+
     const onClick = () => {
         setProgress(40);
         setTimeout(() => setProgress(80), 300);
         axios
-            .post(
+            .put(
                 `${BACKEND_URL}/api/v1/blog/`,
                 {
+                    id,
                     title,
-                    content,
+                    content: editorContent,
+                    published: true,
                 },
                 {
                     headers: {
@@ -38,7 +47,7 @@ export default function CreateBlog() {
             )
             .then((response) => {
                 const id = response.data.data.id;
-                setContent("");
+                setEditorContent("");
                 setProgress(100);
                 navigate(`/blog/${id}`);
             });
@@ -58,13 +67,13 @@ export default function CreateBlog() {
                         />
                     </div>
                     <div className="text-black min-w-full">
-                        <TextEditor placeholder={"Start typings...."} />
+                        <TextEditor />
                     </div>
                     <div className="">
-                        <Button label="Publish" onClick={onClick} />
+                        <Button label="Save" onClick={onClick} />
                     </div>
                 </div>
             </div>
         </div>
     );
-};
+}

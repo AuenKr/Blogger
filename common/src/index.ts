@@ -1,13 +1,13 @@
 import { z } from "zod";
 
 export const signupInput = z.object({
-    email: z.string(),
+    email: z.string().email(),
     password: z.string().min(6, 'Minimum 6 length password required'),
     name: z.string().optional()
 }).strict()
 
 export const signinInput = z.object({
-    email: z.string(),
+    email: z.string().email(),
     password: z.string()
 }).strict()
 

@@ -3,7 +3,7 @@ compatibility_date = "2023-12-01"
 
 [vars]
 DATABASE_URL="Your_Prisma_Postgres_Connection_Pooing_String"
-JWT_SECRET="SET_PASSWORD"
+JWT_SECRET="Your_Secret_Key"
 
 # [[kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"

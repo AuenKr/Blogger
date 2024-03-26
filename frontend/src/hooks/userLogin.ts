@@ -17,9 +17,6 @@ export const userLogin = (successRedirect: string, failRedirect: string) => {
                 Authorization: localStorage.getItem("authorization"),
             }
         })
-            .then(() => {
-                navigate(successRedirect);
-            })
             // @ts-ignore
             .catch((err) => {
                 if (failRedirect !== "#") navigate(failRedirect);

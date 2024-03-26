@@ -8,9 +8,14 @@ export const SkeletonBlogContent = () => {
                 </div>
             </div>
             <div className="w-[100%] flex flex-col items-center md:space-y-2 md:items-start">
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map(() => (
-                    <div className="h-4 w-11/12 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
-                ))}
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map(
+                    (id) => (
+                        <div
+                            key={id}
+                            className="h-4 w-11/12 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"
+                        ></div>
+                    )
+                )}
             </div>
         </div>
     );

@@ -9,6 +9,11 @@ export const Appbar = () => {
     const navigate = useNavigate();
     const userDetail = useUserDetail();
     const setProgress = useSetRecoilState(progressBarAtom);
+
+    const avatarOnClickHandler = () => {
+        setProgress(40);
+        navigate('/blog/user')
+    }
     return (
         <div className="w-full px-2 lg:px-56 flex justify-between sticky top-0 z-10 bg-white border-b-2 border-slate-500 dark:bg-black">
             <Link to="/blogs" className="flex items-center">
@@ -34,7 +39,7 @@ export const Appbar = () => {
                         }}
                     />
                 </div>
-                <div>
+                <div className="hover:cursor-pointer" onClick={avatarOnClickHandler}>
                     <Avatar name={userDetail.name} />
                 </div>
             </div>

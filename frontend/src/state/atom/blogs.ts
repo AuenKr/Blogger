@@ -26,3 +26,23 @@ export const blogsAtom = atom<BlogType[]>({
         }
     }]
 })
+
+export interface userBlogType {
+    title: string;
+    content: string;
+    id: string;
+    published: boolean,
+    createdAt: Date,
+    authorId: string
+}
+export const userBlogsAtom = atom<userBlogType[]>({
+    key: "userBlogs",
+    default: [{
+        "id": "",
+        "title": "",
+        "content": "",
+        "published": false,
+        "createdAt": new Date(),
+        "authorId" : ""
+    }]
+})

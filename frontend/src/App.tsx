@@ -3,6 +3,9 @@ import { RecoilRoot } from "recoil";
 import { Suspense, lazy } from "react";
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
+import { Loader } from "./components/Loader";
+import EditBlog from "./pages/EditBlog";
+import UserBlogs from "./pages/UserBlogs";
 const Blog = lazy(() => import("./pages/Blog"));
 const Signup = lazy(() => import("./pages/Signup"));
 const Blogs = lazy(() => import("./pages/Blogs"));
@@ -13,7 +16,7 @@ export default function App() {
     return (
         <RecoilRoot>
             <BrowserRouter>
-                <Suspense fallback={<div>Loading....</div>}>
+                <Suspense fallback={<Loader />}>
                     <Routes>
                         <Route
                             path="/"
@@ -31,13 +34,23 @@ export default function App() {
                             errorElement={<ErrorPage />}
                         />
                         <Route
-                            path="/blog/:id"
-                            element={<Blog />}
+                            path="/blog/edit/:id"
+                            element={<EditBlog />}
                             errorElement={<ErrorPage />}
                         />
                         <Route
                             path="/blogs"
                             element={<Blogs />}
+                            errorElement={<ErrorPage />}
+                        />
+                        <Route
+                            path="/blog/user/"
+                            element={<UserBlogs />}
+                            errorElement={<ErrorPage />}
+                        />
+                        <Route
+                            path="/blog/:id"
+                            element={<Blog />}
                             errorElement={<ErrorPage />}
                         />
                         <Route
