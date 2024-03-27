@@ -17,7 +17,7 @@ export const BlogContent = ({
                     {` ${date.getDate()} / ${date.getMonth()} / ${date.getFullYear()} `}
                 </div>
             </div>
-            <div className="truncate text-justify text-lg w-[100%]">
+            <div className="truncate text-justify text-lg w-[100%] text-wrap">
                 <div dangerouslySetInnerHTML={{ __html: content }}></div>
             </div>
         </div>
