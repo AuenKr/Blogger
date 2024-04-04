@@ -4,6 +4,7 @@ import { Button } from "./Button";
 import { useSetRecoilState } from "recoil";
 import { progressBarAtom } from "../state/atom/progressBar";
 import { useUserDetail } from "../hooks/useUserDetail";
+import { ModeToggle } from "./mode-toggle";
 
 export const Appbar = () => {
     const navigate = useNavigate();
@@ -12,8 +13,8 @@ export const Appbar = () => {
 
     const avatarOnClickHandler = () => {
         setProgress(40);
-        navigate('/blog/user')
-    }
+        navigate("/blog/user");
+    };
     return (
         <div className="w-full px-2 lg:px-56 flex justify-between sticky top-0 z-10 bg-white border-b-2 border-slate-500 dark:bg-black">
             <Link to="/blogs" className="flex items-center">
@@ -22,7 +23,7 @@ export const Appbar = () => {
             </Link>
 
             <div className="flex items-center space-x-4">
-                <div className="flex space-x-3 text-sm font-bold">
+                <div className="flex space-x-3 text-sm font-bold justify-center items-center">
                     <Button
                         label="NewBlog"
                         onClick={() => {
@@ -38,8 +39,14 @@ export const Appbar = () => {
                             navigate("/signin");
                         }}
                     />
+                    <div>
+                        <ModeToggle />
+                    </div>
                 </div>
-                <div className="hover:cursor-pointer" onClick={avatarOnClickHandler}>
+                <div
+                    className="hover:cursor-pointer"
+                    onClick={avatarOnClickHandler}
+                >
                     <Avatar name={userDetail.name} />
                 </div>
             </div>
