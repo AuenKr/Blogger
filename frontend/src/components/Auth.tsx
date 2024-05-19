@@ -5,7 +5,7 @@ import { BACKEND_URL } from "../config";
 import { AuthHeader } from "./AuthHeader";
 import { Input } from "./Input";
 import { useSetRecoilState } from "recoil";
-import { progressBarAtom } from "../state/atom/progressBar";
+import { progressBarAtom } from "../state/progressBar";
 import { Button } from "./Button";
 
 export const Auth = ({ type }: AuthInputType) => {

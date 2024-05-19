@@ -1,5 +1,5 @@
 import { useSetRecoilState } from "recoil";
-import { progressBarAtom } from "../state/atom/progressBar";
+import { progressBarAtom } from "../state/progressBar";
 import { ProgressBar } from "../components/ProgressBar";
 import { Appbar } from "../components/Appbar";
 import { useEffect } from "react";
@@ -15,14 +15,13 @@ import { useUserDetail } from "../hooks/useUserDetail";
 export default function Blog() {
     userLogin("#", "/signin");
     const setProgress = useSetRecoilState(progressBarAtom);
+    useEffect(() => {
+        setProgress(100);
+    }, []);
     const navigate = useNavigate();
     const userDetail = useUserDetail();
     const { id } = useParams();
     const { blog, loading } = useBlog(id as string);
-
-    useEffect(() => {
-        setProgress(100);
-    }, []);
     return (
         <>
             <div className="min-h-screen dark:bg-black dark:text-white">

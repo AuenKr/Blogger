@@ -1,7 +1,7 @@
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { userLogin } from "../hooks/userLogin";
-import { progressBarAtom } from "../state/atom/progressBar";
-import { editorContentAtom } from "../state/atom/editorContent";
+import { progressBarAtom } from "../state/progressBar";
+import { editorContentAtom } from "../state/editorContent";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Appbar } from "../components/Appbar";
@@ -19,7 +19,6 @@ export default function EditBlog() {
     const { id } = useParams();
     const { blog } = useBlog(id as string);
     const [title, setTitle] = useState(blog.title || "");
-    
     useEffect(() => {
         setProgress(100);
         setEditorContent(blog.content);

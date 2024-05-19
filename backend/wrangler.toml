@@ -2,7 +2,7 @@ name = "backend"
 compatibility_date = "2023-12-01"
 
 [vars]
-DATABASE_URL="Your_Prisma_Postgres_Connection_Pooing_String"
+DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiODJiOTA5MWEtMGFjNi00NTRhLTk2MjctNDcxNTVlOGExNjlkIiwidGVuYW50X2lkIjoiYTRhYjdjOTViOTI5MGM0NWRkZjgxYTFiNTU4NzhlYjk5NjI0MWNiY2VkYTJhOWI0YmVmMjI3MGVlMjI5YWVjMyIsImludGVybmFsX3NlY3JldCI6ImNiZDVlZDhkLWMwYTAtNGM5My05ZjM4LWJhNTU0NGE4MjI3NiJ9.P3bvseSNcW71dsCwaCjHYpvUfUOXpUtQUr5el4ecGbw"
 JWT_SECRET="Your_Secret_Key"
 
 # [[kv_namespaces]]

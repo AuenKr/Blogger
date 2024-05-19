@@ -2,23 +2,23 @@ import { TextEditor } from "../components/Editor/TextEditor";
 import { Appbar } from "../components/Appbar";
 import { Button } from "../components/Button";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { editorContentAtom } from "../state/atom/editorContent";
+import { editorContentAtom } from "../state/editorContent";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
-import { progressBarAtom } from "../state/atom/progressBar";
+import { progressBarAtom } from "../state/progressBar";
 import { useNavigate } from "react-router-dom";
 import { userLogin } from "../hooks/userLogin";
 
 export default function CreateBlog() {
     userLogin("#", "/signin");
     const setProgress = useSetRecoilState(progressBarAtom);
-    const navigate = useNavigate();
-    const [content, setContent] = useRecoilState(editorContentAtom);
-    const [title, setTitle] = useState("");
     useEffect(() => {
         setProgress(100);
     }, []);
+    const navigate = useNavigate();
+    const [content, setContent] = useRecoilState(editorContentAtom);
+    const [title, setTitle] = useState("");
     const onClick = () => {
         setProgress(40);
         setTimeout(() => setProgress(80), 300);

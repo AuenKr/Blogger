@@ -1,7 +1,7 @@
 import { useSetRecoilState } from "recoil";
 import { Auth } from "../components/Auth";
 import { Quote } from "../components/Quote";
-import { progressBarAtom } from "../state/atom/progressBar";
+import { progressBarAtom } from "../state/progressBar";
 import { ProgressBar } from "../components/ProgressBar";
 import { useEffect } from "react";
 import { userLogin } from "../hooks/userLogin";

@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist",
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "Bundler",
@@ -8,7 +10,8 @@
       "ESNext"
     ],
     "types": [
-      "@cloudflare/workers-types"
+      "@cloudflare/workers-types",
+      "@types/node"
     ],
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx"

@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Avatar } from "./Avatar";
 import { Button } from "./Button";
 import { useSetRecoilState } from "recoil";
-import { progressBarAtom } from "../state/atom/progressBar";
+import { progressBarAtom } from "../state/progressBar";
 import { useUserDetail } from "../hooks/useUserDetail";
 import { ModeToggle } from "./mode-toggle";
 

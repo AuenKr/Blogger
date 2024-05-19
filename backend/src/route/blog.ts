@@ -3,7 +3,8 @@ import { verify } from "hono/jwt";
 import { httpStatusCode } from "../types/httpStatusCode";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
-import { createBlogInput, updateBlogInput, } from "@auenkr/medium-common";
+import { createBlogInput, updateBlogInput, } from "../zod";
+import { contentPerPage } from "../config";
 
 const blog = new Hono<{
     Bindings: {
@@ -33,7 +34,8 @@ blog.use(async (c, next) => {
 
 // POST /api/v1/blog
 // PUT /api/v1/blog
-// GET /api/v1/blog/bulk
+// GET /api/v1/blog/me      -> pagging
+// GET /api/v1/blog/bulk    -> pagging
 // GET /api/v1/blog/:id
 
 blog.post('/', async (c) => {
@@ -54,10 +56,25 @@ blog.post('/', async (c) => {
         const result = await prisma.post.create({
             data: body
         })
-
+        const { noPost } = await prisma.user.update({
+            where: {
+                id: c.get('authorId')
+            },
+            data: {
+                noPost: {
+                    increment: 1
+                }
+            },
+            select: {
+                noPost: true
+            }
+        })
         return c.json({
             msg: 'Blog created successful',
-            data: result
+            data: {
+                ...result,
+                noPost
+            }
         })
     } catch (err) {
         return c.json({
@@ -107,24 +124,46 @@ blog.put('/', async (c) => {
 blog.get('/me', async (c) => {
     try {
         const authorId = c.get("authorId")
+        let pageNo = parseInt(c.req.query('page') || "", 10);
+        if (!pageNo) pageNo = 0;
 
         const prisma = new PrismaClient({
             datasourceUrl: c.env.DATABASE_URL,
         }).$extends(withAccelerate())
 
         const result = await prisma.post.findMany({
+            skip: pageNo * contentPerPage,
+            take: 5,
             where: {
                 authorId: authorId
             },
+            select: {
+                authorId: true,
+                content: true,
+                createdAt: true,
+                id: true,
+                published: true,
+                title: true,
+                updatedAt: true,
+                author: {
+                    select: {
+                        name: true,
+                        email: true,
+                        noPost: true
+                    }
+                }
+            },
+            orderBy: {
+                createdAt: "desc"
+            }
         })
-
         return c.json({
             msg: 'List all blogs by ' + authorId,
             blogs: result || "No blogs"
         })
     } catch (err) {
         return c.json({
-            msg: "Internal server error fdsaf",
+            msg: "Internal server error",
             err
         }, httpStatusCode.InternalServerErr)
     }
@@ -132,11 +171,16 @@ blog.get('/me', async (c) => {
 
 blog.get('/bulk', async (c) => {
     try {
+        let pageNo = parseInt(c.req.query('page') || "", 10);
+        if (!pageNo) pageNo = 0;
+
         const prisma = new PrismaClient({
             datasourceUrl: c.env.DATABASE_URL,
         }).$extends(withAccelerate())
 
         const result = await prisma.post.findMany({
+            skip: pageNo * contentPerPage,
+            take: 5,
             select: {
                 id: true,
                 title: true,
@@ -149,12 +193,32 @@ blog.get('/bulk', async (c) => {
                         email: true
                     }
                 },
+            },
+            orderBy: {
+                createdAt: "desc"
             }
         })
 
         return c.json({
             msg: 'List all blogs',
             blogs: result || "No blogs"
+        })
+    } catch (err) {
+        return c.json({
+            msg: "Internal server error",
+            err
+        }, httpStatusCode.InternalServerErr)
+    }
+})
+
+blog.get('/totalPost', async (c) => {
+    try {
+        const prisma = new PrismaClient({
+            datasourceUrl: c.env.DATABASE_URL,
+        }).$extends(withAccelerate())
+        const result = await prisma.post.findMany({})
+        return c.json({
+            totalPost: result.length
         })
     } catch (err) {
         return c.json({
@@ -206,6 +270,7 @@ blog.get('/:id', async (c) => {
         }, httpStatusCode.InternalServerErr)
     }
 })
+
 blog.get('/user/:id', async (c) => {
     try {
         const authorId = c.req.param('id')
@@ -231,4 +296,5 @@ blog.get('/user/:id', async (c) => {
         }, httpStatusCode.InternalServerErr)
     }
 })
+
 export default blog;

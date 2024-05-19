@@ -1,6 +1,6 @@
 import LoadingBar from "react-top-loading-bar";
 import { useRecoilValue } from "recoil";
-import { progressBarAtom } from "../state/atom/progressBar";
+import { progressBarAtom } from "../state/progressBar";
 
 export const ProgressBar = () => {
     const progress = useRecoilValue(progressBarAtom);

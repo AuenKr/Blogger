@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil"
-import { userAtom } from "../state/atom/userDetail"
+import { userAtom } from "../state/userDetail"
 import { useEffect } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../config";

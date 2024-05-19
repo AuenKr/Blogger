@@ -3,7 +3,7 @@ import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { progressBarAtom } from "../state/atom/progressBar";
+import { progressBarAtom } from "../state/progressBar";
 
 export const userLogin = (successRedirect: string, failRedirect: string) => {
     const navigate = useNavigate();

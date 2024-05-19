@@ -2,7 +2,7 @@
 import JoditEditor from "jodit-react";
 import React, { useMemo, useRef, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { editorContentAtom } from "../../state/atom/editorContent";
+import { editorContentAtom } from "../../state/editorContent";
 
 export const TextEditor = ({ placeholder = " " }) => {
     const editor = useRef(null);

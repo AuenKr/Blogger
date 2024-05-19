@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client/edge"
 import { withAccelerate } from "@prisma/extension-accelerate"
 import { Hono } from "hono"
-import { signinInput, signupInput } from "@auenkr/medium-common"
+import { signinInput, signupInput } from "../zod"
 import { httpStatusCode } from "../types/httpStatusCode"
 import { sign, verify } from "hono/jwt"
 

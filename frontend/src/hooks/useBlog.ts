@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil"
-import { blogAtom } from "../state/atom/blog"
+import { blogAtom } from "../state/blog"
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../config";

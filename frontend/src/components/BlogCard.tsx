@@ -1,7 +1,7 @@
 import { Avatar } from "./Avatar";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { progressBarAtom } from "../state/atom/progressBar";
+import { progressBarAtom } from "../state/progressBar";
 
 export const BlogCard = ({
     blogId,

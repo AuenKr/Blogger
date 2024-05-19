@@ -21,6 +21,7 @@ model User {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  noPost    Int      @default(0)
   posts     Post[]
 }
 
@@ -34,3 +35,4 @@ model Post {
   authorId  String
   author    User     @relation(fields: [authorId], references: [id])
 }
+
