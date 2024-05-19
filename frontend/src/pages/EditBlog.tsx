@@ -1,8 +1,8 @@
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { userLogin } from "../hooks/userLogin";
 import { progressBarAtom } from "../state/progressBar";
-import { editorContentAtom } from "../state/editorContent";
-import { useEffect, useState } from "react";
+import { editorContentAtom, editorTitleAtom } from "../state/editorContent";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Appbar } from "../components/Appbar";
 import { TextEditor } from "../components/Editor/TextEditor";
@@ -18,7 +18,7 @@ export default function EditBlog() {
     const navigate = useNavigate();
     const { id } = useParams();
     const { blog } = useBlog(id as string);
-    const [title, setTitle] = useState(blog.title || "");
+    const [title, setTitle] = useRecoilState(editorTitleAtom);
     useEffect(() => {
         setProgress(100);
         setEditorContent(blog.content);
@@ -66,7 +66,7 @@ export default function EditBlog() {
                         />
                     </div>
                     <div className="text-black min-w-full">
-                        <TextEditor />
+                        <TextEditor/>
                     </div>
                     <div className="">
                         <Button label="Save" onClick={onClick} />

@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { verify } from "hono/jwt";
 import { httpStatusCode } from "../types/httpStatusCode";
-import { Content, GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import { generateBlogInput } from "../zod";
 
 const ai = new Hono<{
@@ -24,7 +24,7 @@ ai.use(async (c, next) => {
     try {
         const authorization = c.req.header('authorization') || "";
         const token = authorization.split(' ')[1];
-        const result = await verify(token, c.env.JWT_SECRET)
+        const result = await verify(token, c.env.JWT_SECRET);
         c.set('authorId', result);
         await next()
     } catch (err) {
@@ -34,7 +34,7 @@ ai.use(async (c, next) => {
     }
 })
 
-ai.get('/generate', async (c) => {
+ai.post('/generate', async (c) => {
     try {
         const parseInput = generateBlogInput.safeParse(await c.req.json());
         if (!parseInput.success) {
@@ -60,9 +60,8 @@ ai.get('/generate', async (c) => {
 
         const chatSession = model.startChat({
             generationConfig,
-            history: history,
+            // history: history,
         });
-
         const result = await chatSession.sendMessage(currMessage);
         return c.json({
             msg: "Generated blog",

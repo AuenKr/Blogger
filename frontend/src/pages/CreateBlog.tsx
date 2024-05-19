@@ -1,10 +1,10 @@
-import { TextEditor } from "../components/Editor/TextEditor";
+import axios from "axios";
+import { EditorType, TextEditor } from "../components/Editor/TextEditor";
 import { Appbar } from "../components/Appbar";
 import { Button } from "../components/Button";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { editorContentAtom } from "../state/editorContent";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { editorContentAtom, editorTitleAtom } from "../state/editorContent";
+import { useEffect } from "react";
 import { BACKEND_URL } from "../config";
 import { progressBarAtom } from "../state/progressBar";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ export default function CreateBlog() {
     }, []);
     const navigate = useNavigate();
     const [content, setContent] = useRecoilState(editorContentAtom);
-    const [title, setTitle] = useState("");
+    const [title, setTitle] = useRecoilState(editorTitleAtom);
     const onClick = () => {
         setProgress(40);
         setTimeout(() => setProgress(80), 300);
@@ -57,14 +57,17 @@ export default function CreateBlog() {
                             onChange={(e) => setTitle(e.target.value)}
                         />
                     </div>
-                    <div className="text-black min-w-full">
-                        <TextEditor placeholder={"Start typings...."} />
+                    <div className="text-black w-[430px] md:w-[500px] lg:w-[800px]">
+                        <TextEditor
+                            type={EditorType.createMode}
+                            placeholder={"Start typings...."}
+                        />
                     </div>
-                    <div className="">
+                    <div>
                         <Button label="Publish" onClick={onClick} />
                     </div>
                 </div>
             </div>
         </div>
     );
-};
+}
