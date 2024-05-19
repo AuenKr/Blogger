@@ -36,6 +36,7 @@ blog.use(async (c, next) => {
 // PUT /api/v1/blog
 // GET /api/v1/blog/me      -> pagging
 // GET /api/v1/blog/bulk    -> pagging
+// GET /api/v1/blog/totalPost
 // GET /api/v1/blog/:id
 
 blog.post('/', async (c) => {

@@ -4,6 +4,7 @@ compatibility_date = "2023-12-01"
 [vars]
 DATABASE_URL="Your_prisma_accelerate_key"
 JWT_SECRET="Your_Secret_Key"
+GEMINI_API_KEY="Your_gemini_key"
 
 # [[kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"
