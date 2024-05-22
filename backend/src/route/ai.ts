@@ -62,7 +62,10 @@ ai.post('/generate', async (c) => {
             generationConfig,
             // history: history,
         });
+        console.log("Generation start")
         const result = await chatSession.sendMessage(currMessage);
+        console.log(result.response.text());
+        console.log("Generation finished")
         return c.json({
             msg: "Generated blog",
             blog: JSON.parse(result.response.text())

@@ -7,4 +7,5 @@ dist
 *.pem
 temp
 wrangler.toml
-
+.wrangler
+postgres-data

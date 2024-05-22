@@ -4,6 +4,7 @@
     "deploy": "wrangler deploy --minify src/index.ts",
     "db:generate": "prisma generate --no-engine",
     "studio": "prisma studio",
+    "dev:docker": "npm run db:generate && npm run dev",
     "build": "tsc"
   },
   "dependencies": {
