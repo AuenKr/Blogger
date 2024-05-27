@@ -1,0 +1,16 @@
+FROM node:slim
+
+WORKDIR /backend
+RUN npm install -g bun
+
+COPY ./package*.json .
+RUN bun install
+
+COPY ./prisma ./prisma
+COPY . .
+
+RUN apt-get update -y && apt-get install -y openssl
+
+EXPOSE 8787
+
+CMD ["bun", "run", "dev:docker"]

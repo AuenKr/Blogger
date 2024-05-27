@@ -8,5 +8,5 @@ GEMINI_API_KEY="Your_gemini_key"
 
 [dev]
 ip = "0.0.0.0"
-port = 8080
+port = 8787
 local_protocol = "http"

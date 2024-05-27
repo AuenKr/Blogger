@@ -1,8 +1,13 @@
 To run locally
 
-1. set all env variable in sample.env and sample.wrangler.toml
+1. rename all sample.env to .env file and  sample.wrangler.toml to wrangler.toml and configure all the values
 
-With Docker
+2. Connect your prisma accelerate and put connection pooling string in backend.env
+
+#### Note 
+Using running postgres locally will not work must need to do above two steps.
+
+3a. With Docker
 
     - In Linux
     > docker compose up
@@ -10,7 +15,7 @@ With Docker
     - In Windows
     > docker-compose up
 
-Without Docker
+3b. Without Docker
 > Install node
 
 > For Backend

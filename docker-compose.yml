@@ -5,34 +5,22 @@ services:
     container_name: medium_backend
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.backend
     volumes:
       - ./backend:/backend
+      - /backend/node_modules
     ports:
-      - "8080:8080"
-    depends_on:
-      - db
+      - "8787:8787"
 
   frontend:
     container_name: medium_frontend
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.frontend
     volumes: 
       - ./frontend:/frontend
+      - /frontend/node_modules
     ports:
       - "5173:5173"
     depends_on:
       - backend
-      - db
-
-  db:
-    container_name: db
-    restart: always
-    image: postgres:9.6
-    environment:
-      POSTGRES_PASSWORD: admin123
-    ports:
-      - 5432
-    volumes:
-      - ./postgres-data:/var/lib/postgresql/data

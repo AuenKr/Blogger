@@ -3,6 +3,7 @@ import { verify } from "hono/jwt";
 import { httpStatusCode } from "../types/httpStatusCode";
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { generateBlogInput } from "../zod";
+import { stream, streamText } from "hono/streaming";
 
 const ai = new Hono<{
     Bindings: {
@@ -42,12 +43,11 @@ ai.post('/generate', async (c) => {
                 msg: "Invalid inputs",
             }, httpStatusCode.InvalidFormat)
         }
-        const { currMessage, history } = parseInput.data;
-
+        let { currMessage, history } = parseInput.data;
         const genAI = new GoogleGenerativeAI(c.env.GEMINI_API_KEY)
         const model = genAI.getGenerativeModel({
             model: "gemini-1.5-flash-latest",
-            systemInstruction: "You will be given a topic to write expert blog writer within 1500 tokens and must use html element and inline css to style component.\n\nBlog must follow the below constrains:\n1. use html element for styling (inside body)\n2. human toned language\n3. Easy explains\n\nOutput format: \n\"{\ntitle: `A good title`,\ncontent: `<div> Here will be the generated content</div>`\n}\"",
+            systemInstruction: "You will be given a topic to write expert blog writer within 1500 tokens and must use html element and inline css to style component.\n\nBlog must follow the below constrains:\n1. use html element for styling (inside body)\n2. human toned language\n3. Easy explains\n\nOutput format will be JSON: \"{ title : `A good title`, content : `<div> Here will be the generated content</div>` }\"",
         });
 
         const generationConfig = {
@@ -55,7 +55,7 @@ ai.post('/generate', async (c) => {
             topP: 0.95,
             topK: 64,
             maxOutputTokens: 1500,
-            responseMimeType: "application/json",
+            
         };
 
         const chatSession = model.startChat({
@@ -63,14 +63,15 @@ ai.post('/generate', async (c) => {
             // history: history,
         });
         console.log("Generation start")
-        const result = await chatSession.sendMessage(currMessage);
-        console.log(result.response.text());
-        console.log("Generation finished")
-        return c.json({
-            msg: "Generated blog",
-            blog: JSON.parse(result.response.text())
-
-        });
+        const result = await model.generateContentStream(currMessage);
+        return streamText(c, async (stream) => {
+            for await (const chunks of result.stream) {
+                const chunkText = chunks.text();
+                console.log(chunkText);
+                stream.write(chunks.text());
+            }
+            console.log("Generation finished")
+        })
     } catch (error) {
         return c.json({
             msg: "Internal server error",
