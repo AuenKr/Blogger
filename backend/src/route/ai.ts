@@ -47,7 +47,7 @@ ai.post('/generate', async (c) => {
         const genAI = new GoogleGenerativeAI(c.env.GEMINI_API_KEY)
         const model = genAI.getGenerativeModel({
             model: "gemini-1.5-flash-latest",
-            systemInstruction: "You will be given a topic to write expert blog writer within 1500 tokens and must use html element and inline css to style component.\n\nBlog must follow the below constrains:\n1. use html element for styling (inside body)\n2. human toned language\n3. Easy explains\n\nOutput format will be JSON: \"{ title : `A good title`, content : `<div> Here will be the generated content</div>` }\"",
+            systemInstruction: "You will be given a topic to write expert blog writer within 1500 tokens and must use html element and inline css to style component.\n\nBlog must follow the below constrains:\n1. use html element for styling (inside body)\n2. human toned language\n3. Easy explains\n\nOutput format: \n\"{\ntitle: `A good title`,\ncontent: `<div> Here will be the generated content</div>`\n}\"",
         });
 
         const generationConfig = {
@@ -55,7 +55,7 @@ ai.post('/generate', async (c) => {
             topP: 0.95,
             topK: 64,
             maxOutputTokens: 1500,
-            
+            responseMimeType: "application/json",
         };
 
         const chatSession = model.startChat({
@@ -63,15 +63,10 @@ ai.post('/generate', async (c) => {
             // history: history,
         });
         console.log("Generation start")
-        const result = await model.generateContentStream(currMessage);
-        return streamText(c, async (stream) => {
-            for await (const chunks of result.stream) {
-                const chunkText = chunks.text();
-                console.log(chunkText);
-                stream.write(chunks.text());
-            }
-            console.log("Generation finished")
-        })
+        const result = await chatSession.sendMessage(currMessage);
+        console.log(result.response.text());
+        console.log("Generation finished")
+        return c.text(JSON.stringify(result.response.text()));
     } catch (error) {
         return c.json({
             msg: "Internal server error",
