@@ -6,6 +6,11 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.backend
+    env_file:
+      - path: ./backend/wrangler.toml
+        required: true
+      - path: ./backend.env
+        required: true
     volumes:
       - ./backend:/backend
       - /backend/node_modules
@@ -17,7 +22,10 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.frontend
-    volumes: 
+    env_file:
+      - path: ./frontend/.env
+        required: true
+    volumes:
       - ./frontend:/frontend
       - /frontend/node_modules
     ports:

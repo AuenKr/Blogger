@@ -19,7 +19,7 @@ user.get('/', async (c) => {
         const prisma = new PrismaClient({
             datasourceUrl: c.env.DATABASE_URL
         }).$extends(withAccelerate());
-
+        console.log("Connected to db")
         return c.json({
             msg: "On test route",
         })
@@ -71,11 +71,11 @@ user.post('/signin', async (c) => {
                 msg: 'Invalid credentials'
             }, httpStatusCode.InvalidFormat)
         }
-
+        console.log("inside /user/signin and db not connected")
         const prisma = new PrismaClient({
             datasourceUrl: c.env.DATABASE_URL
         }).$extends(withAccelerate())
-
+        console.log("inside /user/signin and db connected")
         const result = await prisma.user.findUnique({
             where: body,
         })
@@ -105,11 +105,11 @@ user.get('/me', async (c) => {
         }
         const token = authorization.split(' ')[1];
         const userId = await verify(token, c.env.JWT_SECRET)
-
+        console.log("inside /user/me and db not connected")
         const prisma = new PrismaClient({
             datasourceUrl: c.env.DATABASE_URL
         }).$extends(withAccelerate())
-
+        console.log("inside /user/me and db connected")
         const result = await prisma.user.findUnique({
             where: {
                 id: userId

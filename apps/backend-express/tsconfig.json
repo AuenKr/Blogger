@@ -1,0 +1,13 @@
+{
+  "extends": "@repo/typescript-config/base.json",
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "moduleResolution": "Bundler",
+    "target": "es2020",
+    "module": "esnext",
+    "strict": true,
+    "esModuleInterop": true
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "@repo/db",
+  "version": "1.0.0",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "studio": "npx prisma studio",
+    "generate": "npx prisma generate",
+    "migrate": "npx prisma migrate dev",
+    "deploy": "npx prsima migrate deploy"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@repo/typescript-config": "*"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "exports": {
+    "./client": "./src/index.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.18.0",
+    "prisma": "^5.18.0"
+  }
+}

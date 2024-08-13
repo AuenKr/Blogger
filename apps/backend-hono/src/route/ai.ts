@@ -3,7 +3,6 @@ import { verify } from "hono/jwt";
 import { httpStatusCode } from "../types/httpStatusCode";
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { generateBlogInput } from "../zod";
-import { stream, streamText } from "hono/streaming";
 
 const ai = new Hono<{
     Bindings: {

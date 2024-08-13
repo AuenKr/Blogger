@@ -1,0 +1,22 @@
+{
+  "name": "medium",
+  "version": "1.0.0",
+  "description": "To run locally",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "turbo build",
+    "dev": "turbo dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "turbo": "^2.0.12"
+  },
+  "packageManager": "bun@1.1.22",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}
