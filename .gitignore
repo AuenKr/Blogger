@@ -9,3 +9,7 @@ temp
 wrangler.toml
 .wrangler
 postgres-data
+backend-lambda
+
+.turbo
+node_modules
